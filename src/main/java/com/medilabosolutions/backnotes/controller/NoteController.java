@@ -10,7 +10,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/notes")
@@ -35,13 +34,11 @@ public class NoteController {
 		return notes;
 	}
 
-
 	//Récupérer une note par le nom du patient
 	@GetMapping("/byPatientName/{patientName}")
 	public List<Note> findByPatient(@PathVariable String patientName) {
 		return noteRepository.findByPatient(patientName);
 	}
-
 
 	// Ajouter une nouvelle note
 	@PostMapping
@@ -56,7 +53,6 @@ public class NoteController {
 				.buildAndExpand(note.getPatId())
 				.toUri();
 		return ResponseEntity.created(location).build();
-
 	}
 
 	// Mettre à jour une note

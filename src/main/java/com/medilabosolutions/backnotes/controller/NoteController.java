@@ -44,16 +44,17 @@ public class NoteController {
 	@PostMapping
 	public ResponseEntity<Note> addNote(@RequestBody Note newNote) {
 		Note note = noteRepository.save(newNote);
-		if (Objects.isNull(note)){
+		if (note == null) {
 			return ResponseEntity.noContent().build();
 		}
 		URI location = ServletUriComponentsBuilder
 				.fromCurrentRequest()
-				.path("/id")
-				.buildAndExpand(note.getPatId())
+				.path("/{id}")
+				.buildAndExpand(note.getId())
 				.toUri();
 		return ResponseEntity.created(location).build();
 	}
+
 
 	// Mettre à jour une note
 	@PutMapping("/{id}")
@@ -75,5 +76,4 @@ public class NoteController {
 	public void deleteNote(@PathVariable String id) {
 		noteRepository.deleteById(id);
 	}
-
 }

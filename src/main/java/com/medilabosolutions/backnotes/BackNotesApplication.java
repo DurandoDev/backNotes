@@ -23,7 +23,7 @@ public class BackNotesApplication {
 	}
 
 	@Bean
-	CommandLineRunner runner(NoteRepository repository, MongoTemplate mongoTemplate) {
+	CommandLineRunner runner(NoteRepository repository) {
 		return args -> {
 			String path = "src/main/resources/notes.csv";
 			try (BufferedReader br = new BufferedReader(new FileReader(path))) {

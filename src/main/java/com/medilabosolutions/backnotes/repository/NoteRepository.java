@@ -10,4 +10,6 @@ import java.util.List;
 public interface NoteRepository extends MongoRepository<Note, String> {
 	List<Note> findByPatient(String patient);
 	List<Note> findByPatId(String patId);
+
+	boolean existsByNote(String note);
 }

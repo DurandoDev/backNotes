@@ -6,13 +6,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.mongodb.core.MongoTemplate;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
+import java.io.*;
+import java.net.URL;
 
 
 @SpringBootApplication
@@ -25,8 +21,9 @@ public class BackNotesApplication {
 	@Bean
 	CommandLineRunner runner(NoteRepository repository) {
 		return args -> {
-			String path = "src/main/resources/notes.csv";
-			try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+			ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+			InputStream is = classloader.getResourceAsStream("notes.csv");
+			try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
 				String line;
 				while ((line = br.readLine()) != null) {
 					String[] fields = line.split(";");

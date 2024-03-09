@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -26,13 +27,14 @@ public class NoteController {
 
 	// Récupérer une note par son ID
 	@GetMapping("/{patId}")
-	public List<Note> getNotesByPatientId(@PathVariable String patId) {
+	public ResponseEntity<List<Note>> getNotesByPatientId(@PathVariable String patId) {
 		List<Note> notes = noteRepository.findByPatId(patId);
-		if(notes.isEmpty()) {
-			throw new RuntimeException("No notes found for patient with id " + patId);
+		if (notes == null || notes.isEmpty()) {
+			return ResponseEntity.ok(Collections.emptyList());
 		}
-		return notes;
+		return ResponseEntity.ok(notes);
 	}
+
 
 	//Récupérer une note par le nom du patient
 	@GetMapping("/byPatientName/{patientName}")
